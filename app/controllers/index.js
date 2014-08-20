@@ -6,15 +6,25 @@ function init(){
 	setAddTaskButton();
 	$.index.open();
 	//1. put code here to populate the table for the toDo list
+
+	
+	
 	getDone();
 }
 
 function setAddTaskButton(){
 	var btnAddTask = Titanium.UI.createButton({
 		title: 'Add Task'
+		
+		
 	});
 	//2. add an event listener for the btnAddTask button for the add task function
-	$.win1.setLeftNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
+btnAddTask.addEventListener('click',function(addTask)
+{
+   //Titanium.API.info("You clicked the button");
+});
+	$.win1.setRightNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 windo
+	
 }
 
 function addTask(){
