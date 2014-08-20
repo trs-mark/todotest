@@ -14,7 +14,7 @@ function setAddTaskButton(){
 		title: 'Add Task'
 	});
 	//2. add an event listener for the btnAddTask button for the add task function
-	//3. assign btnAddTask as the right nav button of win1 window
+	$.win1.setLeftNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
 }
 
 function addTask(){
@@ -150,7 +150,7 @@ function setItemAsDone(id){
 	tasksCollection.fetch({ query: sql});
 	
 	if(tasksCollection.length>0){
-		//10. declare a variable named "mode" here from the first item of the tasksCollection
+		//10. declare a variable named "model" here from the first item of the tasksCollection
 		model.set({
 			'status': 1
 		}).save();
