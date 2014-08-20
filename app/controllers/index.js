@@ -6,6 +6,8 @@ function init(){
 	setAddTaskButton();
 	$.index.open();
 	//1. put code here to populate the table for the toDo list
+	var sql = 'SELECT * FROM '+table+ ' WHERE status=1';
+	tasksCollection.fetch({ query: sql});
 	getDone();
 }
 
@@ -14,7 +16,9 @@ function setAddTaskButton(){
 		title: 'Add Task'
 	});
 	//2. add an event listener for the btnAddTask button for the add task function
-	$.win1.setLeftNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
+	
+	$.win1.setLeftNavButton(btnAddTask);
+	getDone();//3. assign btnAddTask as the right nav button of win1 window
 }
 
 function addTask(){
@@ -28,6 +32,9 @@ function addTask(){
 		if(dialog_evt.index === 0){
 			if(dialog_evt.text.trim().length > 0){
 				//4. add code here to save the task
+				model.set({
+			'status': 1
+					}).save();
 				getToDo();
 			}else{
 				Titanium.UI.createAlertDialog({title:'Task not added',message:'Task cannot be empty.'}).show();
@@ -111,6 +118,7 @@ function todoRowFunction(row_evt){
 		title: row_evt.source.title,
 		message: 'What do you want to do?',
 		//7. add something here so that the left button is "Mark as done" and the right button is "Cancel"
+		buttonNames: ['Mark as Done','Cancel'],
 		cancel: 1
 	});
 	dialog.addEventListener('click',function(dialog_evt){

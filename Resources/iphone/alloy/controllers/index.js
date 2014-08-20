@@ -2,12 +2,18 @@ function Controller() {
     function init() {
         setAddTaskButton();
         $.index.open();
+        var sql = "SELECT * FROM " + table + " WHERE status=1";
+        tasksCollection.fetch({
+            query: sql
+        });
         getDone();
     }
     function setAddTaskButton() {
-        Titanium.UI.createButton({
+        var btnAddTask = Titanium.UI.createButton({
             title: "Add Task"
         });
+        $.win1.setLeftNavButton(btnAddTask);
+        getDone();
     }
     function getDone() {
         tasksCollection = Alloy.Collections.instance("tasks");
