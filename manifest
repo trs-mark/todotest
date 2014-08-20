@@ -1,8 +1,8 @@
-#appname: toDoTest
-#publisher: tokikawateppei
-#url: http://
-#image: appicon.png
-#appid: ph.trd.todo.test
-#desc: undefined
-#type: mobile
-#guid: c98bba7b-21d6-40ed-b116-cf380e659b16
+#appname:toDoTest
+#publisher:tokikawateppei
+#url:http://
+#image:appicon.png
+#appid:ph.trd.todo.testA
+#desc:not specified
+#type:mobile
+#guid:c98bba7b-21d6-40ed-b116-cf380e659b16

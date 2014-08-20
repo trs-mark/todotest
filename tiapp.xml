@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>ph.trd.todo.test</id>
+    <id>ph.trd.todo.testA</id>
     <name>toDoTest</name>
     <version>1.0</version>
     <publisher>tokikawateppei</publisher>
