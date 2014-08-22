@@ -1,4 +1,4 @@
-//stuff written in comments are your clues so pay attention
+//stuff written in comments are your clues so pay attentions
 var tasksCollection = Alloy.createCollection('tasks');
 var table = tasksCollection.config.adapter.collection_name;
 
