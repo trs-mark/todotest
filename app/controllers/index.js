@@ -5,7 +5,7 @@ var table = tasksCollection.config.adapter.collection_name;
 function init(){
 	setAddTaskButton();
 	$.index.open();
-	//1. put code here to populate the table for the toDo list
+	//1. put code here to show the "to do" list
 	getDone();
 }
 
@@ -115,8 +115,8 @@ function todoRowFunction(row_evt){
 	});
 	dialog.addEventListener('click',function(dialog_evt){
 		if(dialog_evt.index === 0){
-			//8. add function here to edit/update the task as done 
-			getToDo();
+			setItemAsDone(row_evt.source.c_id);
+			//8. add a function call here to refresh the "to do" table list
 			getDone();
 		}
 	});
@@ -135,7 +135,7 @@ function doneRowFunction(row_evt){
 	dialog.addEventListener('click',function(dialog_evt){
 		if(dialog_evt.index === 0){
 			removeItem(row_evt.source.c_id);
-			//9. add function here to refresh the done table list
+			//9. add a function call here to refresh the done table list
 		}
 	});
 	dialog.show();
