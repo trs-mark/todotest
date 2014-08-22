@@ -5,16 +5,25 @@ var table = tasksCollection.config.adapter.collection_name;
 function init(){
 	setAddTaskButton();
 	$.index.open();
+	
 	//1. put code here to show the "to do" list
 	getDone();
 }
 
 function setAddTaskButton(){
 	var btnAddTask = Titanium.UI.createButton({
-		title: 'Add Task'
+		title: 'Add Task',
+		top : 10,
+		width : 10,
 	});
+button.addEventListener('btnAddTask',fucntion(e));
+	{
+		Titanium.API.info("added");
+	}
 	//2. add an event listener for the btnAddTask button for the add task function
-	$.win1.setLeftNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
+	$.win1.setLeftNavButton(btnAddTask);
+	
+	//3. assign btnAddTask as the right nav button of win1 window
 }
 
 function addTask(){
@@ -23,6 +32,7 @@ function addTask(){
 		style		: Ti.UI.iPhone.AlertDialogStyle.PLAIN_TEXT_INPUT,
 		buttonNames	: ['Ok', 'Cancel'],
 		cancel		: 1
+	
 	});
 	dialog.addEventListener('click', function(dialog_evt) {
 		if(dialog_evt.index === 0){

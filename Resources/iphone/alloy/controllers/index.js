@@ -5,9 +5,14 @@ function Controller() {
         getDone();
     }
     function setAddTaskButton() {
-        Titanium.UI.createButton({
-            title: "Add Task"
+        var btnAddTask = Titanium.UI.createButton({
+            title: "Add Task",
+            top: 10,
+            width: 10
         });
+        button.addEventListener("btnAddTask", fucntion(e));
+        Titanium.API.info("added");
+        $.win1.setLeftNavButton(btnAddTask);
     }
     function getDone() {
         tasksCollection = Alloy.Collections.instance("tasks");
