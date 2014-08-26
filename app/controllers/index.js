@@ -6,6 +6,7 @@ function init(){
 	setAddTaskButton();
 	$.index.open();
 	//1. put code here to show the "to do" list
+	//getTodo();
 	getDone();
 }
 
@@ -13,8 +14,9 @@ function setAddTaskButton(){
 	var btnAddTask = Titanium.UI.createButton({
 		title: 'Add Task'
 	});
-	//2. add an event listener for the btnAddTask button for the add task function
-	$.win1.setLeftNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
+	//2. add an event listener for the btnAddTask button for the add task function 0
+	btnAddTask.addEventListener('click',addTask);
+	$.win1.setRightNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window 0
 }
 
 function addTask(){
@@ -27,7 +29,8 @@ function addTask(){
 	dialog.addEventListener('click', function(dialog_evt) {
 		if(dialog_evt.index === 0){
 			if(dialog_evt.text.trim().length > 0){
-				//4. add code here to save the task
+				//4. add code here to save the task 0
+				saveTask(dialog_evt.text.trim());
 				getToDo();
 			}else{
 				Titanium.UI.createAlertDialog({title:'Task not added',message:'Task cannot be empty.'}).show();
@@ -70,8 +73,9 @@ function getToDo(){
 			'c_id'		: id,
 			'hasChild'	: true
 		});
-		//5. add an event listener for the row for the click event
 		
+		//5. add an event listener for the row for the click event 0
+		row.addEventListener('click',todoRowFunction);
 		tasksArr.push(row);
 	}
 	
@@ -95,7 +99,8 @@ function getDone(){
 		
 		var row = Titanium.UI.createTableViewRow({
 			'title'		: title,
-			//6. something is missing here, what is it?
+			//6. something is missing here, what is it? 0
+			'id'	:id,
 			'hasCheck'	: true
 		});
 		row.addEventListener('click',doneRowFunction);
@@ -110,13 +115,17 @@ function todoRowFunction(row_evt){
 	var dialog = Titanium.UI.createAlertDialog({
 		title: row_evt.source.title,
 		message: 'What do you want to do?',
-		//7. add something here so that the left button is "Mark as done" and the right button is "Cancel"
+		//7. add something here so that the left button is "Mark as done" and the right button is "Cancel" 0
+		message: 'What Do you want to Do?',
+		buttonNames: ['Mark as Done','Cancel'],
 		cancel: 1
 	});
 	dialog.addEventListener('click',function(dialog_evt){
 		if(dialog_evt.index === 0){
 			setItemAsDone(row_evt.source.c_id);
 			//8. add a function call here to refresh the "to do" table list
+			getTodo();
+			//mistake here
 			getDone();
 		}
 	});
@@ -136,6 +145,7 @@ function doneRowFunction(row_evt){
 		if(dialog_evt.index === 0){
 			removeItem(row_evt.source.c_id);
 			//9. add a function call here to refresh the done table list
+			
 		}
 	});
 	dialog.show();
@@ -150,7 +160,8 @@ function setItemAsDone(id){
 	tasksCollection.fetch({ query: sql});
 	
 	if(tasksCollection.length>0){
-		//10. declare a variable named "model" here from the first item of the tasksCollection
+		//10. declare a variable named "model" here from the first item of the tasksCollection 0
+		var model = tasksCollection.at(0);
 		model.set({
 			'status': 1
 		}).save();
