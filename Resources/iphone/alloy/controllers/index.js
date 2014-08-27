@@ -2,12 +2,53 @@ function Controller() {
     function init() {
         setAddTaskButton();
         $.index.open();
+        getToDo();
         getDone();
     }
     function setAddTaskButton() {
-        Titanium.UI.createButton({
+        var btnAddTask = Titanium.UI.createButton({
             title: "Add Task"
         });
+        btnAddTask.addEventListener("click", function() {
+            addTask();
+        });
+        $.win1.setRightNavButton(btnAddTask);
+    }
+    function addTask() {
+        var dialog = Ti.UI.createAlertDialog({
+            title: "Type your task here.",
+            style: Ti.UI.iPhone.AlertDialogStyle.PLAIN_TEXT_INPUT,
+            buttonNames: [ "Ok", "Cancel" ],
+            cancel: 1
+        });
+        dialog.addEventListener("click", function(dialog_evt) {
+            0 === dialog_evt.index && (dialog_evt.text.trim().length > 0 ? getToDo() : Titanium.UI.createAlertDialog({
+                title: "Task not added",
+                message: "Task cannot be empty."
+            }).show());
+        });
+        dialog.show();
+    }
+    function getToDo() {
+        tasksCollection = Alloy.Collections.instance("tasks");
+        var sql = "SELECT * FROM " + table + " WHERE status=0";
+        tasksCollection.fetch({
+            query: sql
+        });
+        var tasksArr = [];
+        for (var i = 0; tasksCollection.length > i; i++) {
+            var task = tasksCollection.at(i);
+            var id = task.get("id");
+            var title = task.get("title");
+            task.get("status");
+            var row = Titanium.UI.createTableViewRow({
+                title: title,
+                c_id: id,
+                hasChild: true
+            });
+            tasksArr.push(row);
+        }
+        $.tblToDo.setData(tasksArr);
     }
     function getDone() {
         tasksCollection = Alloy.Collections.instance("tasks");
@@ -20,9 +61,10 @@ function Controller() {
             var task = tasksCollection.at(i);
             task.get("id");
             var title = task.get("title");
-            task.get("status");
+            var status = task.get("status");
             var row = Titanium.UI.createTableViewRow({
                 title: title,
+                status: status,
                 hasCheck: true
             });
             row.addEventListener("click", doneRowFunction);

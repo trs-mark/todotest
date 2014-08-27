@@ -5,7 +5,7 @@ var table = tasksCollection.config.adapter.collection_name;
 function init(){
 	setAddTaskButton();
 	$.index.open();
-	//1. put code here to show the "to do" list
+	getToDo(); //1. put code here to show the "to do" list
 	getDone();
 }
 
@@ -13,8 +13,11 @@ function setAddTaskButton(){
 	var btnAddTask = Titanium.UI.createButton({
 		title: 'Add Task'
 	});
-	//2. add an event listener for the btnAddTask button for the add task function
-	$.win1.setLeftNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
+	btnAddTask.addEventListener('click',function(e)
+	{
+		addTask();
+	});//2. add an event listener for the btnAddTask button for the add task function
+	$.win1.setRightNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
 }
 
 function addTask(){
@@ -95,7 +98,7 @@ function getDone(){
 		
 		var row = Titanium.UI.createTableViewRow({
 			'title'		: title,
-			//6. something is missing here, what is it?
+			'status'	: status,//6. something is missing here, what is it?
 			'hasCheck'	: true
 		});
 		row.addEventListener('click',doneRowFunction);
@@ -110,7 +113,7 @@ function todoRowFunction(row_evt){
 	var dialog = Titanium.UI.createAlertDialog({
 		title: row_evt.source.title,
 		message: 'What do you want to do?',
-		//7. add something here so that the left button is "Mark as done" and the right button is "Cancel"
+		buttonNames: ['Mark as done','Cancel'],//7. add something here so that the left button is "Mark as done" and the right button is "Cancel"
 		cancel: 1
 	});
 	dialog.addEventListener('click',function(dialog_evt){
