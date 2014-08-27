@@ -6,6 +6,7 @@
 			</Window>
 		</Tab>
 		<Tab title="Done" icon="KS_nav_views.png">
+			
 			<Window id="win2" title="Done">
 				<TableView id="tblDone"></TableView>
 			</Window>

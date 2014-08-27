@@ -1,3 +1,5 @@
+var Alloy = require("alloy"), _ = require("alloy/underscore")._, model, collection;
+
 exports.definition = {
     config: {
         adapter: {
@@ -10,8 +12,6 @@ exports.definition = {
         }
     }
 };
-
-var Alloy = require("alloy"), _ = require("alloy/underscore")._, model, collection;
 
 model = Alloy.M("tasks", exports.definition, []);
 
