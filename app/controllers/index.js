@@ -6,6 +6,7 @@ function init(){
 	setAddTaskButton();
 	$.index.open();
 	//1. put code here to show the "to do" list
+	getToDo();
 	getDone();
 }
 
@@ -14,7 +15,7 @@ function setAddTaskButton(){
 		title: 'Add Task'
 	});
 	//2. add an event listener for the btnAddTask button for the add task function
-	$.win1.setLeftNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
+	$.win1.setRightNavButton(btnAddTask);//3. assign btnAddTask as the right nav button of win1 window
 }
 
 function addTask(){
@@ -27,7 +28,7 @@ function addTask(){
 	dialog.addEventListener('click', function(dialog_evt) {
 		if(dialog_evt.index === 0){
 			if(dialog_evt.text.trim().length > 0){
-				//4. add code here to save the task
+				saveTask();//4. add code here to save the task
 				getToDo();
 			}else{
 				Titanium.UI.createAlertDialog({title:'Task not added',message:'Task cannot be empty.'}).show();
@@ -70,7 +71,7 @@ function getToDo(){
 			'c_id'		: id,
 			'hasChild'	: true
 		});
-		//5. add an event listener for the row for the click event
+		row.addEventListener('click',todoRowFunction);//5. add an event listener for the row for the click event
 		
 		tasksArr.push(row);
 	}
@@ -95,7 +96,8 @@ function getDone(){
 		
 		var row = Titanium.UI.createTableViewRow({
 			'title'		: title,
-			//6. something is missing here, what is it?
+			
+			'status'	: status,//6. something is missing here, what is it?
 			'hasCheck'	: true
 		});
 		row.addEventListener('click',doneRowFunction);
@@ -110,13 +112,16 @@ function todoRowFunction(row_evt){
 	var dialog = Titanium.UI.createAlertDialog({
 		title: row_evt.source.title,
 		message: 'What do you want to do?',
+		
+		style		: Ti.UI.iPhone.AlertDialogStyle.PLAIN_TEXT_INPUT,
+		buttonNames	: ['Mark as Done', 'Cancel'],
 		//7. add something here so that the left button is "Mark as done" and the right button is "Cancel"
 		cancel: 1
 	});
 	dialog.addEventListener('click',function(dialog_evt){
 		if(dialog_evt.index === 0){
 			setItemAsDone(row_evt.source.c_id);
-			//8. add a function call here to refresh the "to do" table list
+			getToDo();//8. add a function call here to refresh the "to do" table list
 			getDone();
 		}
 	});
@@ -135,7 +140,7 @@ function doneRowFunction(row_evt){
 	dialog.addEventListener('click',function(dialog_evt){
 		if(dialog_evt.index === 0){
 			removeItem(row_evt.source.c_id);
-			//9. add a function call here to refresh the done table list
+			getDone();//9. add a function call here to refresh the done table list
 		}
 	});
 	dialog.show();
@@ -147,10 +152,11 @@ function setItemAsDone(id){
 	tasksCollection = Alloy.Collections.instance('tasks');
 	
 	var sql = 'SELECT * FROM '+table+ ' WHERE id='+id;
+	
 	tasksCollection.fetch({ query: sql});
 	
 	if(tasksCollection.length>0){
-		//10. declare a variable named "model" here from the first item of the tasksCollection
+		var model= tasksCollection.at(0);//10. declare a variable named "model" here from the first item of the tasksCollection
 		model.set({
 			'status': 1
 		}).save();
@@ -163,6 +169,7 @@ function removeItem(id){
 	tasksCollection = Alloy.Collections.instance('tasks');
 	
 	var sql = 'SELECT * FROM '+table+ ' WHERE id='+id;
+	
 	tasksCollection.fetch({ query: sql});
 	
 	if(tasksCollection.length>0){
